@@ -26,10 +26,11 @@ export class ApiserviceService {
       let ids = id;
       return this._http.delete(`${this.apiUrl}/${ids}`)
    }
-   sendMail(id:any):Observable<any>
+   sendMail(id:any,data:any):Observable<any>
    {
+    console.log('sendMailapi=>',data)
       let ids = id;
-      return this._http.get(`${this.apiUrl}/customermail/${ids}`)
+      return this._http.post(`${this.apiUrl}/customermail/${ids}`,data)
    }
 
    updateData(data:any,id:any):Observable<any>

@@ -39,25 +39,26 @@ inlineRadioOptions: string = ''
   
 
 userSubmit()
-{console.log((<HTMLInputElement>document.getElementById('DAYNMONTH')).value, this.userForm.get.toString())
+{ console.log((<HTMLInputElement>document.getElementById('DAYNMONTH')).value, this.userForm.get.toString())
   console.log(this.userForm.value,'-----value before-----')
   if(this.userForm.valid)
-{console.log('-----value after-----')
+  {console.log('-----value after-----')
 
 
-  this.service.createData(this.userForm.value).subscribe((res)=>
-  {
-    console.log('inside create data ')
-    this.successmsg=res.message;
-    console.log(res,'-----resume after submission-----');
-   
-  });
-  this.userForm.reset();
-  console.log('outside create data ')
-}  
+     this.service.createData(this.userForm.value).subscribe((res)=>
+     {
+      console.log('inside create data ')
+      this.successmsg=res.message;
+    
+    
+     });
+  
+     this.userForm.reset();
+     console.log('outside create data ')
+  }  
 
-  else {this.errormsg = 'all fileds are required ';
-  console.log('error agaya bhai');
+   else {this.errormsg = 'all fileds are required ';
+   console.log('error agaya bhai');
 }   
 
 };

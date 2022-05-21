@@ -31,7 +31,7 @@ app.use(bodyparser.json());
 
 app.use(express.json());
 app.use(passport.initialize());
-app.use(passport.session());
+//app.use(passport.session());
 
 
 db =   mysql.createConnection({
@@ -73,7 +73,7 @@ var options = {
  }
  var connection = mysql2.createPool(options);
 
- var sessionStore =  new MySQLStore({},connection)
+ //var sessionStore =  new MySQLStore({},connection)
 //---- database details ---------------
 //const db = express1.createDatabsePool(mysql)
 

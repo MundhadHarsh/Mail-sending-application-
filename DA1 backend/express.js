@@ -73,32 +73,54 @@ var db =   mysql.createConnection({
 
 function mailRequest(app = require('express'), request = require("request"),transporter=nodemailerCreateTransporter( nodemailer )){
 
-    app.get('/customer/customermail/:id',async(req,res)=>{
-     
+    app.post('/customer/customermail/:id',async(req,res)=>{
+       
+        let receviers_email=req.body.receviers_email;
+        let senders_email=req.body.receviers_email;
+
         let gid= req.params.id;
             
             var jsonpass =await  getCustData(gid,request);
         
-     
+    
         const mailOptions ={
-            from: process.env.FROMEMAIL,
-            to:process.env.TOEMAIL,
+            from: senders_email,
+            to:receviers_email,
             subject: "Remainder for filing Return" ,
             text: `Remainder for filing Return\nCustomer ID -${jsonpass.data[0]['CUSTID']} \nName -${jsonpass.data[0]['NAME']}  \nPhone Number-${jsonpass.data[0]['PHONENUMBER']} \n**Invoice Number**-${jsonpass.data[0]['INVOICENUMBER']} \n**Description**${jsonpass.data[0]['DESCRIPTION']} `,
             template:'index'
         };
         
+  
     
-    
+        var mailPromise =   new Promise(function(resolve, reject) {
+
         transporter.sendMail(mailOptions, (error, info)=> {
             if (error){
             console.log(error);
-            }else{res.send('Email send, '+JSON.parse(info.response));
-            console.log('Email send, '+JSON.parse(info.response)) ;
+            reject( error);
+            }else
+            { information1 =info 
+                console.log("before res send ",info)
+            // res.send('Email send, '+JSON.parse(info.response));
+            resolve(info) 
             }
         });
-    
-    
+    })
+
+
+
+
+    mailPromise.then(
+        function(mailPromise) { console.log(mailPromise);
+            res.send(mailPromise);
+        res.status(200)},
+
+        function(error) { res.send(error);
+        res.status(417) }
+      );
+
+
     })
     
     
