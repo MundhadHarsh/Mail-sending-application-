@@ -1,0 +1,57 @@
+ passport.use(new localStrategy(
+    function(username, password, done) {
+      User.findOne({ username: username }, function (err, user) {
+        if (err) { return done(err); }
+        if (!user) { return done(null, false,{message: 'Incorrect Username'}); }
+        
+        
+        bcrypt.compare(password,user.password,function(err,res){
+
+            if(err)return done(err);
+            if(res===false)return done(null,false,{message: 'Incorrect password'});
+            return done(null,user);
+        })
+      });
+    }
+  ));
+
+
+  app.get('/setup',async(reqq,res)=>{
+      const exists = await User.exists({username:"admin"});
+      if(exists){
+          res.redirect('/login');
+          return;
+      }
+      bcrypt.genSalt (10, function (err, salt){
+        if (err) return next(err) ;
+        bcrypt.hash ("mypassword", salt, function (err, hash) {
+        if (err) return next(err) ;
+        const newAdmin = new User({
+        username: "admin",
+        password: hash});
+        newAdmin.save();
+        res.redirect ( '/login');
+        });
+          });
+        
+ 
+    })
+
+
+    passport.serializeUser((user,done)=>{
+    done(null, user.id)
+ });
+
+ passport.deserializeUser((id,done)=>{
+     User.findById(id,(err,user)=>{
+         done(err,user);
+      })
+ })
+
+
+
+  function isLoggedIn(req,res,next){
+    if(req.isAuthenticated()) return next();
+    res.redirect('/login');
+  }
+
