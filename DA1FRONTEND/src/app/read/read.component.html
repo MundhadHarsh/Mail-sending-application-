@@ -1,0 +1,58 @@
+<div class="container mt-5">
+ 
+
+  <a [routerLink]="['/create']" class ="btn btn-lg btn-primary">Create</a>
+<br><br>
+
+<label for="login-email">E-mail</label>
+&nbsp;&nbsp;
+<label for="receviers-email">To:</label>
+<input id="receviers-email" type="email" required>
+&nbsp;
+<label for="senders-email">From:</label>
+<input id="senders-email" type="email" required>
+
+  <div *ngIf="successmsg" class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>{{successmsg}}</strong> 
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">IDs</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">DESCRIPTION</th>
+        <th scope="col">PHONENUMBER</th>
+        <th scope="col">FREQUENCY</th>
+        <th scope="col">DAYNMONTH</th>
+        <th scope="col">INVOICENUMBER</th>
+        <th scope="col">DISTINCTDATES</th>
+        <th scope="col">Edits</th>
+        <th scope="col">Mails</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor = 'let us of readData'>
+        <th scope="row">{{us.CUSTID}}</th>
+        <td>{{us.NAME}}</td>
+        <td>{{us.EMAIL}}</td>
+        <td>{{us.DESCRIPTION}}</td>
+        <td>{{us.PHONENUMBER}}</td>
+        <td>{{us.FREQUENCY}}</td>
+        <td>{{us.DAYNMONTH}}</td>
+        <td>{{us.INVOICENUMBER}}</td>
+        <td>{{us.DISTINCTDATES}}</td>
+   
+        <td> <button class="btn btn-sm btn-danger" (click)="deleteID(us.CUSTID)">Delete</button>
+          &nbsp;
+        <a [routerLink]="['/create',us.CUSTID]" class ="btn btn-sm btn-success">Update</a></td>
+        <td> <button class="btn btn-sm btn-success" (click)="sendMailID(us.CUSTID)">Send Mail</button>
+      </tr>
+      
+    </tbody>
+  </table>
+</div> 

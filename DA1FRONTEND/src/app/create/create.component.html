@@ -1,0 +1,67 @@
+<div class="container">
+<!--show error msg-->
+
+
+<a [routerLink]="['/read']" class ="btn btn-lg btn-success">Read</a>
+<br>
+
+<div *ngIf="errormsg" class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>{{errormsg}}</strong> 
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div *ngIf="successmsg" class="alert alert-success alert-dismissible fade show" role="alert">
+  <strong>{{successmsg}}</strong> 
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<br>
+
+
+<form [formGroup]="userForm" (ngSubmit)="userSubmit()">
+ 
+  <div class="col -lg-6 mt-2">
+    <input type="text" class="form-control" formControlName="NAME" placeholder="Enter Full Name">
+  </div> 
+  <div class="col -lg-6 mt-2">
+    <input type="text" class="form-control" formControlName="EMAIL" placeholder="Enter email">
+  </div>
+  <div class="col -lg-6 mt-2">
+    <input type="text" class="form-control" formControlName="DESCRIPTION" placeholder="Enter descscription">
+  </div>
+  <div class="col -lg-6 mt-2">
+    <input type="text" class="form-control" formControlName="PHONENUMBER" placeholder="Enter Phone Number">
+  </div>
+  <div class="col -lg-6 mt-2">
+    <input type="text" class="form-control" formControlName="INVOICENUMBER" placeholder="Enter invoice number">
+  </div> 
+
+  
+  <div class="col -lg-6 mt-2">
+    <label  id="DAYNMONTHLabel"  ngDefaultControl>Date(s) for return:</label>
+    <input type="text" class="form-control" id="DAYNMONTH" formControlName="DAYNMONTH" placeholder="Particular dates ">
+   
+    <input type="datetime-local" id="DAYNMONTHdatepicker"   placeholder="Enter date for filing return">
+    <button type="button"  (click)="changeLabelName()">Add</button>
+  </div>
+   
+   
+  <div class="col -lg-6 mt-2">
+    <label  id="FREQUENCYLabel"  ngDefaultControl>Remainders: </label>
+    <input type="text" class="form-control" id="FREQUENCY" formControlName="FREQUENCY" placeholder=" day before reminder">
+   
+   <!-- <input type="number" id="day" name="day" min="1" max="90">
+    <button type="button"  (click)="changeLabelName2()">Add</button>-->
+  </div>                                                              
+
+  <div class="col-lg-4 mt-2">
+    <button class="btn btn-primary btn-sm">Create</button>
+  </div>
+
+</form>
+
+</div>
